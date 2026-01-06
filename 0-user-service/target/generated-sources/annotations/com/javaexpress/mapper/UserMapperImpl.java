@@ -1,0 +1,81 @@
+package com.javaexpress.mapper;
+
+import com.javaexpress.dto.CredentialDto;
+import com.javaexpress.dto.UserDto;
+import com.javaexpress.models.Credential;
+import com.javaexpress.models.User;
+import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = "org.mapstruct.ap.MappingProcessor",
+    date = "2026-01-06T08:47:55+0530",
+    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.44.0.v20251118-1623, environment: Java 25.0.1 (Eclipse Adoptium)"
+)
+@Component
+public class UserMapperImpl implements UserMapper {
+
+    @Override
+    public UserDto toUserDto(User user) {
+        if ( user == null ) {
+            return null;
+        }
+
+        UserDto userDto = new UserDto();
+
+        userDto.setEmailAddress( user.getEmail() );
+        userDto.setContact( user.getPhone() );
+        userDto.setUserId( user.getUserId() );
+        userDto.setFirstName( user.getFirstName() );
+        userDto.setLastName( user.getLastName() );
+        userDto.setCredential( credentialToCredentialDto( user.getCredential() ) );
+
+        return userDto;
+    }
+
+    @Override
+    public User toUserEntity(UserDto userDto) {
+        if ( userDto == null ) {
+            return null;
+        }
+
+        User user = new User();
+
+        user.setEmail( userDto.getEmailAddress() );
+        user.setPhone( userDto.getContact() );
+        user.setUserId( userDto.getUserId() );
+        user.setFirstName( userDto.getFirstName() );
+        user.setLastName( userDto.getLastName() );
+        user.setCredential( credentialDtoToCredential( userDto.getCredential() ) );
+
+        return user;
+    }
+
+    protected CredentialDto credentialToCredentialDto(Credential credential) {
+        if ( credential == null ) {
+            return null;
+        }
+
+        CredentialDto credentialDto = new CredentialDto();
+
+        credentialDto.setUsername( credential.getUsername() );
+        credentialDto.setPassword( credential.getPassword() );
+        credentialDto.setRoleBasedAuthority( credential.getRoleBasedAuthority() );
+
+        return credentialDto;
+    }
+
+    protected Credential credentialDtoToCredential(CredentialDto credentialDto) {
+        if ( credentialDto == null ) {
+            return null;
+        }
+
+        Credential credential = new Credential();
+
+        credential.setUsername( credentialDto.getUsername() );
+        credential.setPassword( credentialDto.getPassword() );
+        credential.setRoleBasedAuthority( credentialDto.getRoleBasedAuthority() );
+
+        return credential;
+    }
+}
