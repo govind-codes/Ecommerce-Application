@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2026-01-07T06:54:19+0530",
+    date = "2026-01-07T11:53:33+0530",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.44.0.v20251118-1623, environment: Java 25.0.1 (Eclipse Adoptium)"
 )
 @Component
@@ -25,10 +25,10 @@ public class UserMapperImpl implements UserMapper {
 
         userDto.setEmailAddress( user.getEmail() );
         userDto.setContact( user.getPhone() );
-        userDto.setCredential( credentialToCredentialDto( user.getCredential() ) );
+        userDto.setUserId( user.getUserId() );
         userDto.setFirstName( user.getFirstName() );
         userDto.setLastName( user.getLastName() );
-        userDto.setUserId( user.getUserId() );
+        userDto.setCredential( credentialToCredentialDto( user.getCredential() ) );
 
         return userDto;
     }
@@ -43,12 +43,32 @@ public class UserMapperImpl implements UserMapper {
 
         user.setEmail( userDto.getEmailAddress() );
         user.setPhone( userDto.getContact() );
-        user.setUserId( userDto.getUserId() );
         user.setFirstName( userDto.getFirstName() );
         user.setLastName( userDto.getLastName() );
         user.setCredential( credentialDtoToCredential( userDto.getCredential() ) );
 
         return user;
+    }
+
+    @Override
+    public void updateUserFromDto(UserDto dto, User user) {
+        if ( dto == null ) {
+            return;
+        }
+
+        user.setEmail( dto.getEmailAddress() );
+        user.setPhone( dto.getContact() );
+        user.setFirstName( dto.getFirstName() );
+        user.setLastName( dto.getLastName() );
+        if ( dto.getCredential() != null ) {
+            if ( user.getCredential() == null ) {
+                user.setCredential( new Credential() );
+            }
+            credentialDtoToCredential1( dto.getCredential(), user.getCredential() );
+        }
+        else {
+            user.setCredential( null );
+        }
     }
 
     protected CredentialDto credentialToCredentialDto(Credential credential) {
@@ -58,9 +78,9 @@ public class UserMapperImpl implements UserMapper {
 
         CredentialDto credentialDto = new CredentialDto();
 
+        credentialDto.setUsername( credential.getUsername() );
         credentialDto.setPassword( credential.getPassword() );
         credentialDto.setRoleBasedAuthority( credential.getRoleBasedAuthority() );
-        credentialDto.setUsername( credential.getUsername() );
 
         return credentialDto;
     }
@@ -77,5 +97,15 @@ public class UserMapperImpl implements UserMapper {
         credential.setRoleBasedAuthority( credentialDto.getRoleBasedAuthority() );
 
         return credential;
+    }
+
+    protected void credentialDtoToCredential1(CredentialDto credentialDto, Credential mappingTarget) {
+        if ( credentialDto == null ) {
+            return;
+        }
+
+        mappingTarget.setUsername( credentialDto.getUsername() );
+        mappingTarget.setPassword( credentialDto.getPassword() );
+        mappingTarget.setRoleBasedAuthority( credentialDto.getRoleBasedAuthority() );
     }
 }
