@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2026-01-06T08:21:41+0530",
+    date = "2026-01-07T06:54:19+0530",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.44.0.v20251118-1623, environment: Java 25.0.1 (Eclipse Adoptium)"
 )
 @Component
@@ -21,9 +21,9 @@ public class CredentialMapperImpl implements CredentialMapper {
 
         CredentialDto credentialDto = new CredentialDto();
 
-        credentialDto.setUsername( credential.getUsername() );
         credentialDto.setPassword( credential.getPassword() );
         credentialDto.setRoleBasedAuthority( credential.getRoleBasedAuthority() );
+        credentialDto.setUsername( credential.getUsername() );
 
         return credentialDto;
     }
