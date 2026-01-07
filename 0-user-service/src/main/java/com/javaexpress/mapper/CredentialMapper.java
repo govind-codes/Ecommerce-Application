@@ -5,7 +5,7 @@ import org.mapstruct.Mapper;
 import com.javaexpress.dto.CredentialDto;
 import com.javaexpress.models.Credential;
 
-@Mapper(componentModel = "Spring")
+@Mapper(componentModel = "spring")
 public interface CredentialMapper {
 
 	
