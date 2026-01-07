@@ -1,0 +1,23 @@
+package com.example.demo.mapper;
+
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+
+import com.example.demo.dto.ProductDto;
+import com.example.demo.models.Product;
+
+
+@Mapper(componentModel = "spring")
+public interface ProductMapper {
+	
+	
+	@Mapping(target = "productName", source = "name")
+	@Mapping(target = "productPrice", source = "price")
+	ProductDto toDto(Product product);
+	
+	@Mapping(source = "productName", target = "name")
+	@Mapping(source = "productPrice", target = "price")
+	Product toEntity(ProductDto productDto);	
+
+	
+}
