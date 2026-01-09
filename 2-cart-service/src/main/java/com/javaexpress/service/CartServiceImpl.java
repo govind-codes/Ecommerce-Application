@@ -1,8 +1,6 @@
 package com.javaexpress.service;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -12,6 +10,10 @@ import org.springframework.stereotype.Service;
 
 import com.javaexpress.dto.CartItemRequestDto;
 import com.javaexpress.dto.CartItemResponseDto;
+import com.javaexpress.dto.UserDto;
+import com.javaexpress.exception.ResourceNotFoundException;
+import com.javaexpress.feignclients.ProductFeignclient;
+import com.javaexpress.feignclients.UserFeignclient;
 import com.javaexpress.model.CartItem;
 import com.javaexpress.repository.CartRepository;
 
@@ -22,10 +24,23 @@ public class CartServiceImpl implements CartService {
 
 	@Autowired
 	CartRepository cartRepository;
-
+	@Autowired
+	ProductFeignclient productFeignclient;
+	@Autowired
+	UserFeignclient userFeignclient;
+	
 	@Override
 	public CartItemResponseDto addToCart(CartItemRequestDto request) {
 		// TODO Auto-generated method stub
+		UserDto userDto= userFeignclient.findUserId(request.getUserId().intValue());
+		
+		if(userDto== null) {
+			throw new ResourceNotFoundException("User not exist for userId: "+request.getUserId());
+		}
+		
+		if(!productFeignclient.existByProductId(request.getProductId())) {
+			throw new ResourceNotFoundException("Product not exist with productId: "+request.getProductId());
+		}
 
 		CartItem cartItem = new CartItem();
 
