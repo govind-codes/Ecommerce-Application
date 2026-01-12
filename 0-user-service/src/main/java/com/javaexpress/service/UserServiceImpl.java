@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.javaexpress.dto.UserDto;
+import com.javaexpress.exception.UserNotFoundException;
 import com.javaexpress.mapper.UserMapper;
 import com.javaexpress.models.Credential;
 import com.javaexpress.models.User;
@@ -58,7 +59,7 @@ public class UserServiceImpl implements UserService {
 	public UserDto findById(Integer userId) {
 		// TODO Auto-generated method stub
 		return userRepository.findById(userId).map(userMapper::toUserDto)
-				.orElseThrow(() -> new RuntimeException("User details not found for this userid : " + userId));
+				.orElseThrow(() -> new UserNotFoundException("User details not found for this userid : " + userId));
 	}
 	
 	@Override

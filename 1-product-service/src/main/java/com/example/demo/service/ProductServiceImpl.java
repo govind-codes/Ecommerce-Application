@@ -73,4 +73,11 @@ public class ProductServiceImpl implements ProductService {
 
 	}
 
+	@Override
+	public boolean existByProductId(Long productId) {
+		// TODO Auto-generated method stub
+		
+		return productRepository.existsById(productId);
+	}
+
 }
