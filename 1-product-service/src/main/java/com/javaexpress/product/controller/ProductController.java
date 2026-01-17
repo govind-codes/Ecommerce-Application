@@ -42,6 +42,7 @@ public class ProductController {
 
 	@GetMapping("{productId}")
 	public ProductDto fetchProduct(@PathVariable Long productId) {
+		log.info("ProductController : : fetch Product {}", productId);
 		return productService.findById(productId);
 	}
 
