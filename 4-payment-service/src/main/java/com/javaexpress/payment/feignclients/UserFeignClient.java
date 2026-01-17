@@ -1,0 +1,15 @@
+package com.javaexpress.payment.feignclients;
+
+
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import com.javaexpress.payment.dto.UserDto;
+
+@FeignClient(name= "USER-SERVICE", path="api/v1/user")
+public interface UserFeignClient {
+	
+	@GetMapping("{userid}")
+	public UserDto findUserId(@PathVariable Integer userid);
+}
